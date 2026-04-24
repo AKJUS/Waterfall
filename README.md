@@ -6,7 +6,6 @@ A mod for Kerbal Space Program, intended to provide an alternate way to simulate
 * [Dependencies](#dependencies)
 * [Installation](#installation)
 * [Contributing](#contributing)
-* [License](#licensing)
 
 ## Features
 
@@ -21,10 +20,12 @@ This is a framework mod and **does nothing by itself**. Pick up a mod that suppl
 ## Dependencies
 
 ### Required
-These components are required for the mod to function and are bundled as part of any download:
+These components are required for the mod to function.
 * [ModuleManager (4.2.3)](https://github.com/sarbian/ModuleManager)
 
 ## Installation
+
+Installation with [CKAN](https://github.com/KSP-CKAN/CKAN/wiki) is recommended.
 
 To install, place the GameData folder inside your Kerbal Space Program folder. If asked to overwrite files, please do so.
 
@@ -32,5 +33,7 @@ NOTE: Do NOT rename or move folders within the GameData folder - this mod uses a
 
 ## Contributing
 
-I certainly accept pull requests. Please target all such things to the `dev` branch though!
+Waterfall uses [KSPBuildTools](https://kspbuildtools.readthedocs.io/en/stable/). Please read its documentation on how to specify your KSP install location in order to compile Waterfall.
+
+Pull requests are welcom. Make sure each pull request is limited to a single topic, bug, or feature and does not include unnecessary edits to project files etc.  Please include an update to the CHANGELOG.md file describing the change (and tag it with your own name if you would like).
 
