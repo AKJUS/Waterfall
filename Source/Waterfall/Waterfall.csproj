@@ -7,7 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <KSPVersionFile Include="Waterfall.version">
-      <Destination>$(RepoRootPath)/GameData/Waterfall/Versioning/Waterfall.version</Destination>
+      <Destination>$(KSPBT_ModRoot)/Waterfall.version</Destination>
     </KSPVersionFile>
   </ItemGroup>
   <PropertyGroup>
