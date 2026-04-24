@@ -1,6 +1,7 @@
 # Unreleased
 
-- Fixed a regression in the randomness controller. Effects that used a RandomnessController created prior to 0.10.0 did not include a new required configuration field to determine whether the controller used a randomized seed, which was being defaulted to False. This has been changed to default to True, which is a more generally correct default. 
+- Fixed a regression in the randomness controller. Effects that used a RandomnessController created prior to 0.10.0 did not include a new required configuration field to determine whether the controller used a randomized seed, which was being defaulted to False. This has been changed to default to True, which is a more generally correct default.
+- CustomPullController can now read a field from any kind of module, not just ModuleEngines.
 
 # v0.10.5
 
