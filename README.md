@@ -35,5 +35,5 @@ NOTE: Do NOT rename or move folders within the GameData folder - this mod uses a
 
 Waterfall uses [KSPBuildTools](https://kspbuildtools.readthedocs.io/en/stable/). Please read its documentation on how to specify your KSP install location in order to compile Waterfall.
 
-Pull requests are welcom. Make sure each pull request is limited to a single topic, bug, or feature and does not include unnecessary edits to project files etc.  Please include an update to the CHANGELOG.md file describing the change (and tag it with your own name if you would like).
+Pull requests are welcome. Make sure each pull request is limited to a single topic, bug, or feature and does not include unnecessary edits to project files etc.  Please include an update to the CHANGELOG.md file describing the change (and tag it with your own name if you would like).
 
