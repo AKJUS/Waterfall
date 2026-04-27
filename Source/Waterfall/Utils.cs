@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -49,6 +50,7 @@ namespace Waterfall
     ///   Log a message with the mod name tag prefixed
     /// </summary>
     /// <param name="str">message string </param>
+    [Conditional("DEBUG")]
     public static void Log(string str, LogType logType)
     {
       if (IsLogging(logType))
