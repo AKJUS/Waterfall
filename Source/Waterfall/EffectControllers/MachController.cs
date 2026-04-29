@@ -3,7 +3,7 @@
 namespace Waterfall
 {
   /// <summary>
-  ///   A controller that pulls from atmosphere density
+  ///   A controller that pulls from the vessel's current mach number.
   /// </summary>
   [DisplayName("Mach")]
   public class MachController : WaterfallController

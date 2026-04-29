@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Waterfall
 {
   /// <summary>
-  ///   A controller that pulls from throttle settings
+  ///   A controller that pulls from a light's intensity
   /// </summary>
   [Serializable]
   [DisplayName("Light")]

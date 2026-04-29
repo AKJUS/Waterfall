@@ -8,8 +8,10 @@ using UnityEngine;
 namespace Waterfall
 {
   /// <summary>
-  ///   A controller that pulls specified value from engines module.
-  ///   Output is normalized to 0..1 range and smoothing is applied when <see cref="responseRateUp" /> or <see cref="responseRateDown" /> not zero.
+  ///   A controller that pulls a value from some other module on the part.
+  ///   The type of the module to find is specified in <c>moduleTypeName</c>.  If more than one module of this type exists, then they can be disambiguated by specifying <c>engineIDFieldName</c> (a field on the module to retrieve an identifier from) and <c>engineID</c> (the value of the identifier).
+  ///   The value to pull may be a method, field, or property, specified in <c>memberName</c>.  <c>predicateFieldName</c> specifies a boolean field on the module which must be true in order for the value to be pulled (e.g. <c>isOperational</c> for engines).
+  ///   Output is normalized to 0..1 range via <c>minInputValue</c> and <c>maxInputValue</c> and smoothing is applied when <see cref="responseRateUp" /> or <see cref="responseRateDown" /> not zero.
   ///   This is pull based alternative to <see cref="CustomPushController" /> which is push based.
   /// </summary>
   /// <example>
@@ -19,9 +21,13 @@ namespace Waterfall
   [DisplayName("Custom (Pull)")]
   public class CustomPullController : WaterfallController
   {
+    /// <summary>The type of the module to pull from.</summary>
     [Persistent] public string moduleTypeName = "ModuleEngines";
-    [Persistent] public string engineIDFieldName = String.Empty; // a field on the module used for disambiguation if more than one exists
+    /// <summary>If there is more than one module of the desired type, this specifies a field on the module to treat as an identifier.</summary>
+    [Persistent] public string engineIDFieldName = String.Empty;
+    /// <summary>In combination with <c>engineIDFieldName, this is the value of the identifier field used to select the right module.</c></summary>
     [Persistent] public string engineID   = String.Empty;
+    /// <summary>The name of the field on the module to pull from.  May be a method (must return </summary>
     [Persistent] public string memberName = "currentThrottle"; // There is ThrottleController for that, but works as an example
     [Persistent] public string predicateFieldName = String.Empty; // the name of a boolean field on the module which must be true for the value to be pulled
 
