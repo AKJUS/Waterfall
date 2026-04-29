@@ -22,16 +22,20 @@ namespace Waterfall
     [Persistent] public string noiseType = RandomNoiseName;
 
     [Persistent] public bool randomSeed = true;
-    [Persistent] public int seed;
+    [Persistent] public float seed;
     [Persistent] public float scale = 1f;
     [Persistent] public float minimum;
     [Persistent] public float speed = 1f;
+
+    float speedX;
+    float speedY;
 
     private NoiseFunction noiseFunc;
 
     public RandomnessController() : base() { }
     public RandomnessController(ConfigNode node) : base(node)
     {
+      
     }
 
 
@@ -46,8 +50,14 @@ namespace Waterfall
         noiseFunc = PerlinNoise;
         if (randomSeed)
         { 
-          seed = Random.Range(0, int.MaxValue); 
+          // floats only have ~7 decimal digits of precision, so let's not waste too much on the seed
+          seed = Random.Range(-1000f, 1000f);
         }
+
+        // randomize the direction that we move through the noise texture
+        float speedAngle = Random.Range(0f, 2f * Mathf.PI);
+        speedX = Mathf.Cos(speedAngle) * speed;
+        speedY = Mathf.Sin(speedAngle) * speed;
       }
       else if (noiseType == RandomNoiseName)
       {
@@ -59,7 +69,11 @@ namespace Waterfall
 
     public float RandomNoise() => Random.Range(range.x, range.y);
 
-    public float PerlinNoise() => Mathf.PerlinNoise(seed + Time.time * speed, seed + Time.time * speed) * (scale - minimum) + minimum;
+    public float PerlinNoise()
+    {
+      float time = Time.time;
+      return Mathf.PerlinNoise(seed + Time.time * speedX, seed + Time.time * speedY) * (scale - minimum) + minimum;
+    }
 
     protected override bool UpdateInternal()
     {
