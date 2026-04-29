@@ -11,8 +11,11 @@ namespace Waterfall
   {
     [Persistent] public string sourceController = "";
     public FastFloatCurve mappingCurve = new();
+    [Persistent] public float responseRateUp = 0;
+    [Persistent] public float responseRateDown = 0;
 
     private WaterfallController source;
+    private bool interpolating = false;
 
     public RemapController() : base() { }
     public RemapController(ConfigNode node) : base(node)
@@ -54,12 +57,23 @@ namespace Waterfall
     {
       if (source == null) return false;
 
-      if (!source.awake) return false;
+      if (!source.awake && !interpolating) return false;
 
       float[] sourceValues = source.Get();
       for (int i = sourceValues.Length; i-- > 0;)
       {
-        values[i] = mappingCurve.Evaluate(sourceValues[i]);
+        float targetValue = mappingCurve.Evaluate(sourceValues[i]);
+        float rampRate = targetValue > values[i] ? responseRateUp : responseRateDown;
+
+        if (rampRate > 0)
+        {
+          values[i] = Mathf.MoveTowards(values[i], targetValue, rampRate * TimeWarp.deltaTime);
+          interpolating = interpolating || values[i] != targetValue;
+        }
+        else
+        {
+          values[i] = targetValue;
+        }
       }
       return true;
     } 

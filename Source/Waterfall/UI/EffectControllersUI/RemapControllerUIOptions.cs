@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Waterfall.UI.EffectControllersUI
 {
@@ -12,6 +13,8 @@ namespace Waterfall.UI.EffectControllersUI
     private string sourceController;
     private Texture2D miniCurve;
     private UICurveEditWindow curveEditor;
+    private string rampRateUp;
+    private string rampRateDown;
 
     public RemapControllerUIOptions()
     {
@@ -29,6 +32,16 @@ namespace Waterfall.UI.EffectControllersUI
       sourceController = GUILayout.TextArea(sourceController);
       GUILayout.EndHorizontal();
 
+      GUILayout.BeginHorizontal();
+      GUILayout.Label("Ramp Rate Up", UIResources.GetStyle("data_header"), GUILayout.MaxWidth(160f));
+      rampRateUp = GUILayout.TextArea(rampRateUp, GUILayout.MaxWidth(60f));
+      GUILayout.EndHorizontal();
+
+      GUILayout.BeginHorizontal();
+      GUILayout.Label("Ramp Rate Down", UIResources.GetStyle("data_header"), GUILayout.MaxWidth(160f));
+      rampRateDown = GUILayout.TextArea(rampRateDown, GUILayout.MaxWidth(60f));
+      GUILayout.EndHorizontal();
+
       var buttonRect = GUILayoutUtility.GetRect(curveButtonDims.x, curveButtonDims.y);
       var imageRect = new Rect(buttonRect.xMin + 10f, buttonRect.yMin + 10, buttonRect.width - 20, buttonRect.height - 20);
       if (GUI.Button(buttonRect, ""))
@@ -43,6 +56,8 @@ namespace Waterfall.UI.EffectControllersUI
     {
       mappingCurve = controller.mappingCurve;
       sourceController = controller.sourceController;
+      rampRateUp = controller.responseRateUp.ToString();
+      rampRateDown = controller.responseRateDown.ToString();
 
       GenerateCurveThumbs();
     }
@@ -52,6 +67,8 @@ namespace Waterfall.UI.EffectControllersUI
       {
         sourceController = sourceController,
         mappingCurve = mappingCurve,
+        responseRateUp = ParseOrZero(rampRateUp),
+        responseRateDown = ParseOrZero(rampRateDown),
       };
 
     private void EditCurve(FastFloatCurve toEdit, CurveUpdateFunction function)

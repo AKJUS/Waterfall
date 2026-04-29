@@ -62,5 +62,15 @@ namespace Waterfall.UI.EffectControllersUI
     ///   Must be overridden if controller type have UI options that have to be copied into newly created controller instance.
     /// </summary>
     protected virtual TController CreateControllerInternal() => new();
+
+    protected static float ParseOrZero(string str)
+    {
+      if (Single.TryParse(str, out float result))
+      {
+        return result;
+      }
+
+      return 0;
+    }
   }
 }

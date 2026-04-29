@@ -4,6 +4,7 @@
 - CustomPullController can now read a field from any kind of module, not just ModuleEngines.
 - Added Conditional attribute to logging calls, to reduce performance overhead.  These will now only be emitted in a debug configuration.
 - Improved randomness of perlin noise controller.
+- Added response rate to Remap controller
 
 # v0.10.5
 

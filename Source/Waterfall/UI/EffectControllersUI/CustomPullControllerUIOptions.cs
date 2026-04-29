@@ -24,16 +24,6 @@ namespace Waterfall.UI.EffectControllersUI
       LoadOptions(new()); // Initialize default values from dummy model instance
     }
 
-    private static float ParseOrZero(string str)
-    {
-      if (Single.TryParse(str, out float result))
-      {
-        return result;
-      }
-
-      return 0;
-    }
-
     public override void DrawOptions()
     {
       GUILayout.BeginVertical();
