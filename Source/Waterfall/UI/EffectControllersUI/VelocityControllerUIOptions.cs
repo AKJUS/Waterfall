@@ -5,7 +5,7 @@ namespace Waterfall.UI.EffectControllersUI
 {
   public class VelocityControllerUIOptions : DefaultEffectControllerUIOptions<VelocityController>
   {
-    private readonly string[] modes = { "Surface", "Orbit" };
+    private readonly string[] modes = { "Surface", "Orbit", "Vertical" };
 
     private int modeFlag;
 
@@ -17,7 +17,7 @@ namespace Waterfall.UI.EffectControllersUI
       int flagChanged = GUILayout.SelectionGrid(
         modeFlag, 
         modes, 
-        Mathf.Min(modes.Length, 2), 
+        modes.Length, 
         UIResources.GetStyle("radio_text_button"));
 
       modeFlag = flagChanged;

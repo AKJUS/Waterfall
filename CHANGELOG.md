@@ -5,6 +5,7 @@
 - Added Conditional attribute to logging calls, to reduce performance overhead.  These will now only be emitted in a debug configuration.
 - Improved randomness of perlin noise controller.
 - Added response rate to Remap controller
+- Added "vertical" mode to velocity controller
 - Updated controller documentation on the wiki
 
 # v0.10.5

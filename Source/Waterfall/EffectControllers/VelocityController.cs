@@ -24,11 +24,11 @@ namespace Waterfall
     protected override float UpdateSingleValue()
     {
       if (mode == 0)
-        return (float)parentModule.vessel.srf_velocity.magnitude ;
+        return (float)parentModule.vessel.srf_velocity.magnitude;
+      else if (mode == 1)
+        return (float)parentModule.vessel.obt_velocity.magnitude;
       else
-        return (float)parentModule.vessel.obt_velocity.magnitude ;
-
-      return 0;
+        return (float)parentModule.vessel.verticalSpeed;
     }
   }
 }
