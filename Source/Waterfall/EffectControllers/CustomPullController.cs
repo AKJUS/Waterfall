@@ -34,8 +34,8 @@ namespace Waterfall
 
     private PartModule sourceModule;
     private Func<float>   pullValueMethod = () => 0;
-    private Func<PartModule, bool> TestPredicate = (module) => true;
-    private Func<PartModule, string> GetEngineID = (module) => String.Empty;
+    private Func<PartModule, bool> TestPredicate;
+    private Func<PartModule, string> GetEngineID;
 
     public CustomPullController() : base() { }
 
@@ -61,7 +61,7 @@ namespace Waterfall
         if (engineIDFieldName == String.Empty)
           engineIDFieldName = "engineID";
         if (predicateFieldName == string.Empty)
-          engineIDFieldName = "isOperational";
+          predicateFieldName = "isOperational";
       }
 
       if (!String.IsNullOrEmpty(engineIDFieldName))
@@ -94,7 +94,7 @@ namespace Waterfall
       }
 
       UnityEngine.Component[] possibleModules = host.GetComponents(moduleType);
-      sourceModule = possibleModules.FirstOrDefault(c => GetEngineID(c as PartModule) == engineID) as PartModule;
+      sourceModule = possibleModules.FirstOrDefault(c => GetEngineID == null || GetEngineID(c as PartModule) == engineID) as PartModule;
 
       if (sourceModule == null && possibleModules.Length > 0)
       {
@@ -114,16 +114,18 @@ namespace Waterfall
       pullValueMethod = FindSuitableMemberOnEnginesModule();
     }
 
+    static readonly object[] x_emptyArgs = new object[0];
+
     private Func<float> FindSuitableMemberOnEnginesModule()
     {
-      const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+      const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
       var methodInfo = sourceModule.GetType()
         .GetMethods(bindingFlags)
         .FirstOrDefault(m => m.Name == memberName && m.GetParameters().Length == 0);
 
       if (methodInfo != null)
-        return () => Convert.ToSingle(methodInfo.Invoke(sourceModule, new object[0]));
+        return () => Convert.ToSingle(methodInfo.Invoke(sourceModule, x_emptyArgs));
 
       var propertyInfo = sourceModule.GetType()
         .GetProperty(memberName, bindingFlags);
@@ -160,10 +162,13 @@ namespace Waterfall
       if (sourceModule == null)
         return 0;
 
-      if (!TestPredicate(sourceModule))
+      if (TestPredicate != null && !TestPredicate(sourceModule))
         return 0;
 
-      engineID = GetEngineID(sourceModule); // Make sure that engineID is in-sync with actually used module
+      if (GetEngineID != null)
+      {
+        engineID = GetEngineID(sourceModule); // Make sure that engineID is in-sync with actually used module
+      }
 
       try
       {
